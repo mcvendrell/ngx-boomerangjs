@@ -216,10 +216,21 @@ pnpm add ../ngx-boomerangjs/ngx-boomerangjs-1.0.0.tgz
 
 ### Publishing to npm
 
-Authentication uses a project-scoped `.npmrc` with an `NPM_TOKEN` environment variable. Set the token before publishing:
+Authentication uses a project-scoped `.npmrc` with an `NPM_TOKEN` environment variable. Set the token before publishing.
+
+.npmrc file content should be:
+
+```
+registry=https://registry.npmjs.org/
+//registry.npmjs.org/:_authToken=${NPM_TOKEN}
+```
+
+Then run the publish script:
 
 ```bash
-set NPM_TOKEN=your_token_here   # Windows
+set NPM_TOKEN=your_token_here # Windows
+export NPM_TOKEN=your_token_here # Unix
+
 npm run publish:dist
 ```
 
