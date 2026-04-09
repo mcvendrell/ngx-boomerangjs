@@ -1,8 +1,16 @@
 {
   "name": "ngx-boomerangjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular 21+ wrapper for boomerangjs with automatic script loading and RUM support",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcvendrell/ngx-boomerangjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mcvendrell/ngx-boomerangjs/issues"
+  },
+  "homepage": "https://github.com/mcvendrell/ngx-boomerangjs#readme",
   "type": "module",
   "publishConfig": {
     "access": "public"
