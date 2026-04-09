@@ -1,0 +1,45 @@
+{
+  "name": "ngx-boomerangjs",
+  "version": "1.0.0",
+  "description": "Angular 21+ wrapper for boomerangjs with automatic script loading and RUM support",
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "angular",
+    "boomerang",
+    "boomerangjs",
+    "rum",
+    "real-user-monitoring",
+    "ngx",
+    "performance"
+  ],
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json",
+    "build:ts": "tsc -p tsconfig.json",
+    "clean": "rmdir /S /Q dist",
+    "pack:local": "npm pack ./dist",
+    "publish:dist": "npm publish ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "peerDependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "boomerangjs": "^1.815.1"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^21.0.2",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "globals": "^17.4.0",
+    "ng-packagr": "^21.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.58.1"
+  }
+}
