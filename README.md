@@ -162,7 +162,7 @@ Helper to build a `ScriptDescriptor[]` list for the boomerang core and common pl
 
 ## Configuration Reference
 
-The `boomerangConfig` property maps directly to boomerang's `BOOMR.init()` options. See the [boomerangjs documentation](https://nicj.net/boomerangjs/) for the full list of supported plugins and settings.
+The `boomerangConfig` property maps directly to boomerang's `BOOMR.init()` options. See the [boomerangjs documentation](https://github.com/akamai/boomerang) for the full list of supported plugins and settings.
 
 ## Contributing
 
