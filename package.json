@@ -34,7 +34,6 @@
     "lint:fix": "eslint . --fix"
   },
   "peerDependencies": {
-    "@angular/common": "^21.0.0",
     "@angular/core": "^21.0.0",
     "boomerangjs": "^1.815.1"
   },

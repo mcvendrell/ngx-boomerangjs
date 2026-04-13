@@ -16,6 +16,8 @@ export class BoomerangMetricsService {
     if (!this.config.enabled || this.initialized) {
       return;
     }
+    // Set immediately to prevent concurrent calls from entering the initialization path.
+    this.initialized = true;
 
     // User can use custom scripts providing it in config.scripts; otherwise load the default boomerang bundle
     const scripts = this.config.scripts ?? createDefaultBoomerangScripts(this.config.scriptBaseUrl);
@@ -24,9 +26,9 @@ export class BoomerangMetricsService {
       timeoutMs: this.config.scriptLoadTimeoutMs,
     });
 
-    // Resolve source IP once and keep a safe fallback for environments where lookup fails.
-    // User can also choose to disable this feature by omitting sourceIpFactory and sourceIpVarName from config,
-    // in which case the default IP will be used without any lookup attempt.
+    // Resolve source IP once. If sourceIpFactory is not provided, falls back to '127.0.0.1'.
+    // If sourceIpVarName is not provided, defaults to 'source_ip'. The variable is always attached
+    // to every beacon; omit both options only if you want the default placeholder value sent.
     const sourceIp = this.config.sourceIpFactory ? await this.config.sourceIpFactory().catch(() => '127.0.0.1') : '127.0.0.1';
     const sourceIpVarName = this.config.sourceIpVarName ?? 'source_ip';
 
@@ -45,7 +47,5 @@ export class BoomerangMetricsService {
     if (!initialized) {
       throw new Error('[ngx-boomerangjs] BOOMR is unavailable after script load. Verify CSP/AdBlock constraints.');
     }
-
-    this.initialized = true;
   }
 }

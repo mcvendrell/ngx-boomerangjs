@@ -19,7 +19,7 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "useDefineForClassFields": false,
+    "useDefineForClassFields": false
   },
   "include": [
     "src/**/*.ts"

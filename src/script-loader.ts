@@ -40,13 +40,15 @@ export async function loadScriptsInOrder(scripts: ScriptDescriptor[], options?: 
     }
 
     // Race the load promise against a timeout to avoid hanging forever on blocked networks.
-    await Promise.race([
-      appendScript(script, scriptAttribute),
-      new Promise<never>((_, reject) => {
-        window.setTimeout(() => {
-          reject(new Error(`[ngx-boomerangjs] Timeout loading script: ${script.src}`));
-        }, timeoutMs);
-      }),
-    ]);
+    await new Promise<void>((resolve, reject) => {
+      const timerId = window.setTimeout(() => {
+        reject(new Error(`[ngx-boomerangjs] Timeout loading script: ${script.src}`));
+      }, timeoutMs);
+
+      appendScript(script, scriptAttribute).then(
+        () => { window.clearTimeout(timerId); resolve(); },
+        (err: unknown) => { window.clearTimeout(timerId); reject(err instanceof Error ? err : new Error(String(err))); },
+      );
+    });
   }
 }
