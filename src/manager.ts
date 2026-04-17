@@ -4,7 +4,7 @@ export type BoomerangRuntimeState = 'idle' | 'ready' | 'initialized' | 'error';
 
 export interface InitializeBoomerangOptions {
   config: BoomrConfig;
-  onBeforeBeacon?: () => void;
+  onBeforeBeacon?: (vars: Record<string, unknown>) => void;
   onOnBeacon?: () => void;
   callPageReady?: boolean;
 }
@@ -44,7 +44,9 @@ export class BoomerangRumManager {
     boomerang.init(options.config);
 
     if (options.onBeforeBeacon) {
-      boomerang.subscribe('before_beacon', options.onBeforeBeacon);
+      boomerang.subscribe('before_beacon', (...args: unknown[]) => {
+        options.onBeforeBeacon?.(args[0] as Record<string, unknown>);
+      });
     }
 
     if (options.onOnBeacon) {

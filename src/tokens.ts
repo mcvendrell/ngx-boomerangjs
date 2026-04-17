@@ -9,6 +9,7 @@ export interface NgxBoomerangjsConfig {
   scriptLoadTimeoutMs?: number;
   sourceIpVarName?: string;
   sourceIpFactory?: () => Promise<string>;
+  fixXhrTResp?: boolean;
 }
 
 export const BOOMERANG_CONFIG = new InjectionToken<NgxBoomerangjsConfig>('BOOMERANG_CONFIG');

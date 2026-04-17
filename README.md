@@ -74,6 +74,7 @@ export const appConfig: ApplicationConfig = {
         const result = await firstValueFrom(ipService.getIpAddress());
         return result.clientHost;
       },
+      fixXhrTResp: true,
     }),
   ],
 };
@@ -126,6 +127,13 @@ In `angular.json`, in `projects.<app>.architect.build.options.assets`, add the f
 }
 ```
 
+## Optional additions to standard boomerangjs
+
+For my own needs, I added a few, and completely optional, features to the standard boomerangjs behavior that I found useful in my Angular applications. You will not probably need it:
+
+- `sourceIpVarName` and `sourceIpFactory` options to add a custom variable with the client's source IP address to each beacon. The factory function can be async to support fetching the IP from an external service.
+- `fixXhrTResp` option to automatically calculate `t_resp` for XHR initiators when it is missing. This is useful for Angular applications where `t_resp` may not be populated consistently due to various reasons like race conditions.
+
 ## API
 
 ### `provideBoomerangMetrics(config: NgxBoomerangjsConfig)`
@@ -143,18 +151,20 @@ export interface NgxBoomerangjsConfig {
   scriptLoadTimeoutMs?: number;
   sourceIpVarName?: string;
   sourceIpFactory?: () => Promise<string>;
+  fixXhrTResp?: boolean;
 }
 ```
 
-| Property              | Type                    | Description                                                                                 |
-| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------- |
-| `enabled`             | `boolean`               | Enables or disables boomerang initialization.                                               |
-| `boomerangConfig`     | `BoomrConfig`           | Boomerang `BOOMR.init()` configuration.                                                     |
-| `scripts`             | `ScriptDescriptor[]`    | Optional ordered script list. If omitted, defaults are created from `scriptBaseUrl`.        |
-| `scriptBaseUrl`       | `string`                | Optional Base URL used by `createDefaultBoomerangScripts()` when `scripts` is not provided. |
-| `scriptLoadTimeoutMs` | `number`                | Optional Timeout in milliseconds for each script load.                                      |
-| `sourceIpVarName`     | `string`                | Optional beacon variable name used to store source IP.                                      |
-| `sourceIpFactory`     | `() => Promise<string>` | Optional async function that resolves the source IP value.                                  |
+| Property              | Type                    | Description                                                                                                         |
+| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `enabled`             | `boolean`               | Enables or disables boomerang initialization.                                                                       |
+| `boomerangConfig`     | `BoomrConfig`           | Boomerang `BOOMR.init()` configuration.                                                                             |
+| `scripts`             | `ScriptDescriptor[]`    | Optional ordered script list. If omitted, defaults are created from `scriptBaseUrl`.                                |
+| `scriptBaseUrl`       | `string`                | Optional Base URL used by `createDefaultBoomerangScripts()` when `scripts` is not provided.                         |
+| `scriptLoadTimeoutMs` | `number`                | Optional Timeout in milliseconds for each script load.                                                              |
+| `sourceIpVarName`     | `string`                | Optional beacon variable name used to store source IP.                                                              |
+| `sourceIpFactory`     | `() => Promise<string>` | Optional async function that resolves the source IP value.                                                          |
+| `fixXhrTResp`         | `boolean`               | Optional fallback for XHR/Fetch beacons that computes `t_resp` when boomerang leaves it empty. Defaults to `false`. |
 
 ### `createDefaultBoomerangScripts(options)`
 
