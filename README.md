@@ -127,6 +127,12 @@ In `angular.json`, in `projects.<app>.architect.build.options.assets`, add the f
 }
 ```
 
+Important behavior note:
+
+- The library loads boomerang scripts dynamically at _runtime_ (inside `APP_INITIALIZER`), so Angular build phase does not inject those script tags into `index.html` automatically.
+- If you need build-time `<script>` tags in `index.html`, use `projects.<app>.architect.build.options.scripts` in `angular.json` instead of only `assets`.
+- Default script base path is `assets/boomerang` (relative path). If your app uses a different base/deploy URL, set `scriptBaseUrl` explicitly.
+
 ## Optional additions to standard boomerangjs
 
 For my own needs, I added a few, and completely optional, features to the standard boomerangjs behavior that I found useful in my Angular applications. You will not probably need it:

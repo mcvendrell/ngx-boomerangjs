@@ -1,6 +1,6 @@
 {
   "name": "ngx-boomerangjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Angular 21+ wrapper for boomerangjs with automatic script loading and RUM support",
   "license": "MIT",
   "repository": {

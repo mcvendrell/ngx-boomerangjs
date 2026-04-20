@@ -34,6 +34,8 @@ export class BoomerangMetricsService {
     // User can use custom scripts providing it in config.scripts; otherwise load the default boomerang bundle
     const scripts = this.config.scripts ?? createDefaultBoomerangScripts(this.config.scriptBaseUrl);
 
+    // Inject scripts in order to the HEAD of index.html, waiting for each to load before proceeding to ensure proper plugin initialization sequence.
+    // A timeout is applied to avoid hanging indefinitely on blocked networks.
     await loadScriptsInOrder(scripts, {
       timeoutMs: this.config.scriptLoadTimeoutMs,
     });

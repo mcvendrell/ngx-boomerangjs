@@ -1,6 +1,7 @@
 import type { ScriptDescriptor } from './types';
 
-const DEFAULT_BASE = '/assets/boomerang';
+// Very IMPORTANT: don't use / at start of baseUrl since the script paths are relative to index.html page.
+const DEFAULT_BASE = 'assets/boomerang';
 
 // These are the original boomerang scripts, but without integrity or crossOrigin attributes since those can vary based on hosting and build setup.
 // Users can customize the script list by providing their own in the config if needed.
