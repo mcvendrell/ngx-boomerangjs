@@ -33,8 +33,6 @@ export async function loadScriptsInOrder(scripts: ScriptDescriptor[], options?: 
   const scriptAttribute = options?.scriptAttribute ?? DEFAULT_SCRIPT_ATTRIBUTE;
 
   for (const script of scripts) {
-    console.log('Script cargado ---->>', script.src);
-
     // Skip script injection when the same source already exists in the document.
     const selector = `script[src="${script.src}"]`;
     if (existingScript(selector)) {
@@ -59,7 +57,4 @@ export async function loadScriptsInOrder(scripts: ScriptDescriptor[], options?: 
       );
     });
   }
-
-  const indexHtmlSnapshot = document.documentElement?.outerHTML ?? '';
-  console.log('index.html snapshot after boomerang script load ---->>', indexHtmlSnapshot);
 }
