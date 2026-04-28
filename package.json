@@ -26,7 +26,6 @@
   ],
   "scripts": {
     "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json",
-    "build:ts": "tsc -p tsconfig.json",
     "clean": "rmdir /S /Q dist",
     "pack:local": "npm pack ./dist",
     "publish:dist": "npm publish ./dist",
