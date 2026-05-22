@@ -84,47 +84,74 @@ export const appConfig: ApplicationConfig = {
 
 In `angular.json`, in `projects.<app>.architect.build.options.assets`, add the following entries to map the boomerang core and plugin scripts from `node_modules` to your `assets` folder during build:
 
+Short version (take care to _not separate with space_ the list of plugins, will not be found if separated):
+
 ```json
-{
-  "glob": "boomerang.js",
-  "input": "node_modules/boomerangjs/",
-  "output": "assets/boomerang/"
-},
-{
-  "glob": "rt.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "auto-xhr.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "errors.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "memory.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "painttiming.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "navtiming.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-},
-{
-  "glob": "zzz-last-plugin.js",
-  "input": "node_modules/boomerangjs/plugins/",
-  "output": "assets/boomerang/plugins/"
-}
+  {
+    "glob": "boomerang.js",
+    "input": "node_modules/boomerangjs/",
+    "output": "assets/boomerang/"
+  },
+  {
+    "glob": "{rt.js,auto-xhr.js,errors.js,history.js,memory.js,painttiming.js,spa.js,navtiming.js,zzz-last-plugin.js}",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  }
+```
+
+Script per script version:
+
+```json
+  {
+    "glob": "boomerang.js",
+    "input": "node_modules/boomerangjs/",
+    "output": "assets/boomerang/"
+  },
+  {
+    "glob": "rt.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "auto-xhr.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "history.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "spa.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "errors.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "memory.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "painttiming.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "navtiming.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  },
+  {
+    "glob": "zzz-last-plugin.js",
+    "input": "node_modules/boomerangjs/plugins/",
+    "output": "assets/boomerang/plugins/"
+  }
 ```
 
 Important behavior note:
