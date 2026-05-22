@@ -138,7 +138,7 @@ Important behavior note:
 For my own needs, I added a few, and completely optional, features to the standard boomerangjs behavior that I found useful in my Angular applications. You will not probably need it:
 
 - `sourceIpVarName` and `sourceIpFactory` options to add a custom variable with the client's source IP address to each beacon. The factory function can be async to support fetching the IP from an external service.
-- `fixXhrTResp` option to automatically calculate `t_resp` for XHR initiators when it is missing. This is useful for Angular applications where `t_resp` may not be populated consistently due to various reasons like race conditions.
+- `fixXhrTResp` option to automatically calculate `t_resp` for XHR initiators when it is missing. This is useful for Angular applications where `t_resp` may not be populated consistently due to various reasons, like race conditions.
 
 ## API
 
@@ -166,15 +166,49 @@ export interface NgxBoomerangjsConfig {
 | `enabled`             | `boolean`               | Enables or disables boomerang initialization.                                                                       |
 | `boomerangConfig`     | `BoomrConfig`           | Boomerang `BOOMR.init()` configuration.                                                                             |
 | `scripts`             | `ScriptDescriptor[]`    | Optional ordered script list. If omitted, defaults are created from `scriptBaseUrl`.                                |
-| `scriptBaseUrl`       | `string`                | Optional Base URL used by `createDefaultBoomerangScripts()` when `scripts` is not provided.                         |
+| `scriptBaseUrl`       | `string`                | Optional Base URL used by internal `createDefaultBoomerangScripts()` instead of default 'assets/boomerang' path     |
 | `scriptLoadTimeoutMs` | `number`                | Optional Timeout in milliseconds for each script load.                                                              |
 | `sourceIpVarName`     | `string`                | Optional beacon variable name used to store source IP.                                                              |
 | `sourceIpFactory`     | `() => Promise<string>` | Optional async function that resolves the source IP value.                                                          |
 | `fixXhrTResp`         | `boolean`               | Optional fallback for XHR/Fetch beacons that computes `t_resp` when boomerang leaves it empty. Defaults to `false`. |
 
-### `createDefaultBoomerangScripts(options)`
+### Load custom scripts instead default ones
 
-Helper to build a `ScriptDescriptor[]` list for the boomerang core and common plugins. With this option, you can replace the default script loading behavior with your own custom script list while still benefiting from the `scriptBaseUrl` and `scriptLoadTimeoutMs` configuration options.
+By default, the library creates a list of scripts to load based on the known boomerang core and plugin scripts. However, if you want to have full control over the script loading process, you can provide your own list of scripts via the `scripts` property in the configuration.
+
+With this option, you can replace the default script loading behavior with your own custom script list. Thus is an example of a configuration that uses a custom script list:
+
+```ts
+provideBoomerangMetrics({
+  enabled: true,
+  scripts: [
+    { src: `assets/boomerang/boomerang.js` },
+    { src: `assets/boomerang/plugins/auto-xhr.js` },
+    { src: `assets/boomerang/plugins/history.js` },
+    { src: `assets/boomerang/plugins/spa.js` },
+  ],
+  boomerangConfig: {
+    beacon_url: URL_METRICS.METRICS_FT,
+    beacon_type: 'POST',
+    log: (_msg: unknown, level: string) => {
+      if (level === 'error') {
+        console.error('[Boomerang]', _msg);
+      }
+    },
+    autorun: false,
+    instrument_xhr: true,
+    AutoXHR: {
+      enabled: true,
+      monitorFetch: true, // Important to capture fetch requests, since Angular HttpClient uses fetch under the hood in modern browsers
+      alwaysSendXhr: true,
+      xhrRequireChanges: false,
+    },
+    History: {
+      enabled: true,
+    },
+  },
+});
+```
 
 ## Configuration Reference
 
