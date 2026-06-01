@@ -1,6 +1,6 @@
 # ngx-boomerangjs
 
-An Angular 21+ wrapper for [boomerangjs](https://github.com/nicjansma/boomerangjs) that provides automatic script loading and Real User Monitoring (RUM) support via Angular's dependency injection system.
+An Angular 21+ wrapper for [boomerangjs](https://github.com/akamai/boomerang) that provides automatic script loading and Real User Monitoring (RUM) support via Angular's dependency injection system.
 
 ## Features
 
